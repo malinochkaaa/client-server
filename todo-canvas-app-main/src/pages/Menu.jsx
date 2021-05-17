@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { headline1, headline2 } from '@sberdevices/plasma-tokens';
 import { MarkedList, MarkedItem}  from '@sberdevices/plasma-ui'
-import { text, background, gradient, body1 } from '@sberdevices/plasma-tokens';
 
 const Menu = () => {
     return(

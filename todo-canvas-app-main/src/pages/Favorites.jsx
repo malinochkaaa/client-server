@@ -2,22 +2,13 @@ import React from "react";
 import styled from 'styled-components';
 import { Container, Header, Image }  from '@sberdevices/plasma-ui';
 import { Link } from "react-router-dom";
-import { text, background, gradient, body1 } from '@sberdevices/plasma-tokens';
 import {
     Card,
-    CardBody,
     CardContent,
-    CardMedia,
-    CardHeadline1, 
     Cell, 
-    CellIcon, 
-    IconPlaceholder, 
-    TextBoxBiggerTitle, 
     TextBoxSubTitle, 
     TextBox, 
-    TextBoxTitle, 
-    CellDisclosure,
-    Button
+    TextBoxTitle
  } from '@sberdevices/plasma-ui';
  import { IconHeart } from '@sberdevices/plasma-icons';
 

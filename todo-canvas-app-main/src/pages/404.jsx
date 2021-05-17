@@ -1,7 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import { headline1, headline2 } from '@sberdevices/plasma-tokens';
-import { text, background, gradient, body1 } from '@sberdevices/plasma-tokens';
+import { headline1 } from '@sberdevices/plasma-tokens';
 
 const AppStyled = styled.div`
     padding-top: 190px;
