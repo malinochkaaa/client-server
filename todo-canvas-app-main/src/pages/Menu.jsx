@@ -1,5 +1,5 @@
 import React from "react";
-import "./Styles/Menu.css"
+import "./styles/Menu.css"
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { headline1, headline2 } from '@sberdevices/plasma-tokens';

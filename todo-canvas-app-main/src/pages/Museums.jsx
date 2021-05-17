@@ -1,8 +1,8 @@
 import React from "react";
-import "./Styles/Museums.css"
+import "./styles/Museums.css"
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
 import { Container, Header, Image }  from '@sberdevices/plasma-ui';
+import { Link } from "react-router-dom";
 import { text, background, gradient, body1, headline1, footnote1 } from '@sberdevices/plasma-tokens';
 import {
     Card,
@@ -36,7 +36,7 @@ export const Museums = () => (
                 <Container>
                     <Header
                         title="Музеи"
-                        subtitle="Subtitle text"
+                        subtitle="Список музеев Москвы"
                     >
                     </Header>
                 </Container>
@@ -54,7 +54,7 @@ export const Museums = () => (
                             }
                             content={
                                 <TextBox>
-                                    <TextBoxTitle>Третьяковская галерея в Лаврушинском переулке</TextBoxTitle>
+                                    <TextBoxTitle><Link to="/museums/first">Третьяковская галерея в Лаврушинском переулке</Link></TextBoxTitle>
                                     <TextBoxSubTitle>Лаврушинский переулок, 10</TextBoxSubTitle>
                                 </TextBox>
                             }

@@ -23,6 +23,7 @@ import Menu from "./pages/Menu";
 import NotFound from "./pages/404";
 import Museums from "./pages/Museums";
 import Favorites from "./pages/Favorites";
+import Tretyakovka from "./pages/museums/Tretyakovka";
 
 const initializeAssistant = (getState) => {
   if (process.env.NODE_ENV === "development") {
@@ -122,6 +123,8 @@ export class App extends React.Component {
                         <Route exact path = "/" component={Menu} />
                         <Route exact path = "/404" component = {NotFound} />
                         <Route exact path = "/museums" component = {Museums} />
+                        <Route exact path = "/museums/first" component = {Tretyakovka} />
+                        <Route exact path = "/fav/first" component = {Tretyakovka} />
                         <Route exact path = "/fav" component = {Favorites} />
                         <Redirect to = "/404"/>
                       </Switch>
