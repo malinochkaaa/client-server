@@ -1,12 +1,14 @@
 img{
     border-radius: 8px;
-    border: 5px solid #ddd;
     height: auto; 
     width: auto; 
+}
+.img-m{
     max-width: 250px;
 }
+
 .img-style{
-    padding: 40px;
+    padding: 30px;
 }
 .card-style{
     padding-left: 230px;

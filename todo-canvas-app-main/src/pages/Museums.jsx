@@ -39,7 +39,7 @@ export const Museums = () => (
                         <Cell
                             contentLeft={
                                 <div className="img-style">
-                                    <Image src="https://upload.wikimedia.org/wikipedia/commons/7/75/Tretyakov_Manor%2C_2010_02x.jpg?uselang=ru" />
+                                    <Image className="img-m" src="https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_1_darvin_museum.jpg" />
                                 </div>
                             }
                             content={

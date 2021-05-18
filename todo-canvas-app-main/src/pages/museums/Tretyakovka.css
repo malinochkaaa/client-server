@@ -9,6 +9,11 @@
     height: 3rem;
     display:inline;
 }
+.small-icon{
+    width: 1.3rem;
+    height: 1.3rem;
+    display:inline;
+}
 .icon-no-link{
     width: 3rem;
     height: 3rem;
@@ -26,4 +31,13 @@
 }
 p, h3{
     display:inline;
+}
+.img-t{
+    border-radius: 8px;
+    height: auto; 
+    width: auto; 
+    max-width: 360px;
+}
+.align-right{
+    float: right;
 }
