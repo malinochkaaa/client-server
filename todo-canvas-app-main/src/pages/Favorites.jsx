@@ -11,7 +11,6 @@ import {
     TextBox, 
     TextBoxTitle
  } from '@sberdevices/plasma-ui';
- import { IconHeart } from '@sberdevices/plasma-icons';
 
 const DivStyled = styled.div`
     padding: 60px;

@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import "./styles/Museums.css"
 import styled from 'styled-components';
-import { Container, Header, Image }  from '@sberdevices/plasma-ui';
+import { IconHeartStroke, IconHeart } from '@sberdevices/plasma-icons';
 import { Link } from "react-router-dom";
 import {
     Card,
@@ -9,7 +9,11 @@ import {
     Cell, 
     TextBoxSubTitle, 
     TextBox, 
-    TextBoxTitle
+    TextBoxTitle,
+    ActionButton,
+    Container,
+    Header,
+    Image
  } from '@sberdevices/plasma-ui';
 
 const CardStyled = styled.div`
@@ -19,7 +23,9 @@ const DivStyled = styled.div`
     padding: 60px;
  `;
 
-export const Museums = () => (
+export const Museums = () => {
+    const [inFavorite, setFavorite] = useState(false);
+    return(
     <div>
         <div>
            <DivStyled>
@@ -44,8 +50,16 @@ export const Museums = () => (
                             }
                             content={
                                 <TextBox>
-                                    <TextBoxTitle><Link to="/museums/first">Третьяковская галерея в Лаврушинском переулке</Link></TextBoxTitle>
-                                    <TextBoxSubTitle>Лаврушинский переулок, 10</TextBoxSubTitle>
+                                    <TextBoxTitle className="text-style"><Link to="/museums/first">Третьяковская галерея в Лаврушинском переулке</Link></TextBoxTitle>
+                                    <TextBoxSubTitle className="text-style">Лаврушинский переулок, 10</TextBoxSubTitle>
+                                    <ActionButton
+                                        onClick = {() => setFavorite(!inFavorite)}
+                                        size='l'
+                                        view='primary'
+                                        pin='square-square'
+                                        contentLeft={inFavorite ? <IconHeart/> : <IconHeartStroke/>}
+                                    >  
+                                    </ActionButton>
                                 </TextBox>
                             }
                         />
@@ -54,6 +68,7 @@ export const Museums = () => (
             </CardStyled>
         </div>
     </div>
-);
+    );
+};
 
 export default Museums;

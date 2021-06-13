@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "2gis-maps": "^3.6.6",
     "@2gis/mapgl": "^1.12.1",
     "@sberdevices/assistant-client": "^2.14.0",
     "@sberdevices/plasma-icons": "^1.7.0",
@@ -15,6 +16,7 @@
     "@types/node": "^12.19.2",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "google-maps-react": "^2.0.6",
     "leaflet": "^1.7.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
