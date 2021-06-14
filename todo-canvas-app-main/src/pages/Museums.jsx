@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import "./styles/Museums.css"
+
 import styled from 'styled-components';
 import { IconHeartStroke, IconHeart } from '@sberdevices/plasma-icons';
-import { Link } from "react-router-dom";
+import { Link, browserHistory } from "react-router-dom";
 import {
     Card,
     CardContent,
@@ -13,7 +14,7 @@ import {
     ActionButton,
     Container,
     Header,
-    Image
+    Image,
  } from '@sberdevices/plasma-ui';
 
 const CardStyled = styled.div`
@@ -31,8 +32,10 @@ export const Museums = () => {
            <DivStyled>
                 <Container>
                     <Header
+                        back={true}
                         title="Музеи"
                         subtitle="Список музеев Москвы"
+                       
                     >
                     </Header>
                 </Container>
