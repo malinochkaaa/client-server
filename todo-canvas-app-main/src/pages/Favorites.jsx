@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import "./styles/Museums.css"
 import { Container, Header, Image }  from '@sberdevices/plasma-ui';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
     Card,
     CardContent,
@@ -19,14 +19,20 @@ const DivStyled = styled.div`
  const CardStyled = styled.div`
  padding-left: 60px;
 `;
-export const Favorites = () => (
+export const Favorites = () => {
+    const history = useHistory();
+    return(
     <div>
         <div>
         <DivStyled>
             <Container>
                 <Header
+                    back={true}
                     title="Избранное"
                     subtitle="Список избранных музеев"
+                    onClick={() => {
+                        history.goBack();
+                    }}
                 >
                 </Header>
             </Container>
@@ -54,6 +60,6 @@ export const Favorites = () => (
             </CardStyled>
         </div>
     </div>
-    
-);
+    );
+};
 export default Favorites;

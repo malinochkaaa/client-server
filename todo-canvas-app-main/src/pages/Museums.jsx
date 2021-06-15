@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import "./styles/Museums.css"
-
 import styled from 'styled-components';
 import { IconHeartStroke, IconHeart } from '@sberdevices/plasma-icons';
-import { Link, browserHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
     Card,
     CardContent,
@@ -16,6 +15,7 @@ import {
     Header,
     Image,
  } from '@sberdevices/plasma-ui';
+import { showAllMuseums } from "../server/API_helper";
 
 const CardStyled = styled.div`
     padding-left: 60px;
@@ -25,6 +25,7 @@ const DivStyled = styled.div`
  `;
 
 export const Museums = () => {
+    const history = useHistory();
     const [inFavorite, setFavorite] = useState(false);
     return(
     <div>
@@ -35,7 +36,9 @@ export const Museums = () => {
                         back={true}
                         title="Музеи"
                         subtitle="Список музеев Москвы"
-                       
+                        onClick={() => {
+                            history.goBack();
+                        }}
                     >
                     </Header>
                 </Container>

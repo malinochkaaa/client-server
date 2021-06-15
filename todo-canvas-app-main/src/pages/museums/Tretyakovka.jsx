@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import "./Tretyakovka.css";
 import CarouselContainer from "./Carousel.jsx";
+import { useHistory } from "react-router-dom";
 import { 
     FaInstagram,
     FaFacebookF,
@@ -13,16 +14,28 @@ import {
     FaMapMarkedAlt,
     FaMoneyBillAlt,
  } from "react-icons/fa";
-import { Button } from '@sberdevices/plasma-ui';
-import { IconHeartStroke, IconHeart } from '@sberdevices/plasma-icons';
+import { Button, ActionButton} from '@sberdevices/plasma-ui';
+import { IconHeartStroke, IconHeart, IconChevronLeft } from '@sberdevices/plasma-icons';
 import { headline1, headline3, paragraph1 } from '@sberdevices/plasma-tokens';
 
 
 export const Tretyakovka = () => {
+    const history = useHistory();
     const [inFavorite, setFavorite] = useState(false);
     return(
         <div>
             <div className="name-container">
+                <ActionButton
+                    back={true}
+                    size='l'
+                    view='clear'
+                    pin='square-square'
+                    contentLeft={<IconChevronLeft/>}
+                    onClick={() => {
+                        history.goBack();
+                    }}
+                >  
+                </ActionButton>
                 <h1 style={headline1}>Дарвиновский музей</h1>
                 <p style={paragraph1} className="block-style">Московский музей, посвящённый дарвинской теории эволюции. Инициатором создания стал биолог Александр Котс, начавший свою преподавательскую карьеру при Московских высших женских курсах в 1907-м. Этот же год считается и датой основания музея - учёный перенёс свою коллекцию редких чучел животных в здание курсов в Мерзляковском переулке. После революции 1917 года Дарвиновский музей стал самостоятельным учреждением. В 1994-м правительство Москвы выделило под нужды музея здание на улице Вавилова. По состоянию на 2018 год в состав экспозиции входят 400 000 предметов.</p>
                 <div className="div-style"> 
