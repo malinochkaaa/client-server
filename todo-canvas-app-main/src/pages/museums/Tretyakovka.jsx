@@ -19,7 +19,7 @@ import { IconHeartStroke, IconHeart, IconChevronLeft } from '@sberdevices/plasma
 import { headline1, headline3, paragraph1 } from '@sberdevices/plasma-tokens';
 
 
-export const Tretyakovka = () => {
+export const Tretyakovka = (props) => {
     const history = useHistory();
     const [inFavorite, setFavorite] = useState(false);
     return(
@@ -36,7 +36,7 @@ export const Tretyakovka = () => {
                     }}
                 >  
                 </ActionButton>
-                <h1 style={headline1}>Дарвиновский музей</h1>
+                <h1 style={headline1}>{props.location.data}</h1>
                 <p style={paragraph1} className="block-style">Московский музей, посвящённый дарвинской теории эволюции. Инициатором создания стал биолог Александр Котс, начавший свою преподавательскую карьеру при Московских высших женских курсах в 1907-м. Этот же год считается и датой основания музея - учёный перенёс свою коллекцию редких чучел животных в здание курсов в Мерзляковском переулке. После революции 1917 года Дарвиновский музей стал самостоятельным учреждением. В 1994-м правительство Москвы выделило под нужды музея здание на улице Вавилова. По состоянию на 2018 год в состав экспозиции входят 400 000 предметов.</p>
                 <div className="div-style"> 
                     <CarouselContainer />

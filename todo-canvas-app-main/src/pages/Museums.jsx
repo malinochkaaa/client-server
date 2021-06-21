@@ -56,7 +56,7 @@ export const Museums = () => {
                             }
                             content={
                                 <TextBox>
-                                    <TextBoxTitle className="text-style"><Link to="/museums/first">Третьяковская галерея в Лаврушинском переулке</Link></TextBoxTitle>
+                                    <TextBoxTitle className="text-style"><Link to={ {pathname:"/museums/first", data: "alina"} }>Третьяковская галерея в Лаврушинском переулке</Link></TextBoxTitle>
                                     <TextBoxSubTitle className="text-style">Лаврушинский переулок, 10</TextBoxSubTitle>
                                     <ActionButton
                                         onClick = {() => setFavorite(!inFavorite)}
