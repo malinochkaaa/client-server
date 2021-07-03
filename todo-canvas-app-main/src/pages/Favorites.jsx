@@ -1,16 +1,10 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from 'styled-components';
 import "./styles/Museums.css"
 import { Container, Header, Image }  from '@sberdevices/plasma-ui';
 import { Link, useHistory } from "react-router-dom";
-import {
-    Card,
-    CardContent,
-    Cell, 
-    TextBoxSubTitle, 
-    TextBox, 
-    TextBoxTitle
- } from '@sberdevices/plasma-ui';
+import CardContainer from "./Card.jsx";
+import {showFavorites} from "../server/API_helper"
 
 const DivStyled = styled.div`
     padding: 60px;
@@ -19,8 +13,22 @@ const DivStyled = styled.div`
  const CardStyled = styled.div`
  padding-left: 60px;
 `;
-export const Favorites = () => {
+
+function openMuseum(id, cards, history) {
+    let ind = id - 1;
+    if(ind < 0 || ind > cards.length || history.location.pathname === "/fav/first") return;
+    history.push({pathname: "/fav/first", num: cards[ind].id});
+}
+
+export const Favorites = (props) => {
+    const load = () => {showFavorites().then(res => setCards(res.data))}
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [cards, setCards] = useState([]);
+    useEffect(() => setIsLoaded(true), [cards]);
+    useEffect(() => {if(!isLoaded) load()})
     const history = useHistory();
+    openMuseum(props.openId, cards, history);
+    window.currentURL = history.location.pathname;
     return(
     <div>
         <div>
@@ -39,25 +47,7 @@ export const Favorites = () => {
         </DivStyled>
         </div>
         <div className="card-style">
-            <CardStyled>
-                <Card style={{ width: "50rem" }}>
-                    <CardContent compact>
-                        <Cell
-                            contentLeft={
-                                <div className="img-style">
-                                    <Image  className="img-m" src="https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_1_darvin_museum.jpg" />
-                                </div>
-                            }
-                            content={
-                                <TextBox>
-                                    <TextBoxTitle><Link to="/museums/first">Третьяковская галерея в Лаврушинском переулке</Link></TextBoxTitle>
-                                    <TextBoxSubTitle>Лаврушинский переулок, 10</TextBoxSubTitle>
-                                </TextBox>
-                            }
-                        />
-                    </CardContent>
-                </Card>
-            </CardStyled>
+            {cards===[]?<div></div> : cards.map((e) => (<CardContainer key={e.id} info={e} />))}
         </div>
     </div>
     );

@@ -10,13 +10,12 @@ import {text, background, gradient} from '@sberdevices/plasma-tokens';
 import { DeviceThemeProvider } from '@sberdevices/plasma-ui/components/Device';
 import { typography } from '@sberdevices/plasma-tokens';
 import { body1, headline2 } from '@sberdevices/plasma-tokens';
-
 import {
   BrowserRouter as Router, 
   Route, 
   Switch, 
   Link, 
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import Menu from "./pages/Menu";
@@ -49,16 +48,21 @@ const DocStyle = createGlobalStyle`
     }
 `;
 
+window.currentURL = "/";
+
 export class App extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       character: "sber", //текущий персонаж
+      openedMusId: -1,
+      addFavID: -1,
+      delFavID: -1,
     }
     this.assistant = initializeAssistant(() => this.getStateForAssistant() );
     this.assistant.on("start", (event) => {
+      setTimeout(this.assistant.sendData({action: {action_id: "getSub"}}), 300);
     });
     this.assistant.on("data", (event) => {
       if(event.type === 'character') {
@@ -94,8 +98,37 @@ export class App extends React.Component {
         case "test":
           console.log("test");
           break;
-        default:
-          throw new Error();
+        case "get_sub":
+          window.user_id = action.data;
+          break;
+        case "open_museums_list":
+          window.open("./museums", "_self");
+          break;
+        case "open_favor_museums":
+          window.open("./fav", "_self");
+          break;
+        case "open_museum":
+          if(window.currentURL === "/museums" || window.currentURL === "/fav") {
+            this.setState({openedMusId: action.data});
+            this.setState({openedMusId: -1});
+          }
+          break;
+        case "add_favorite":
+          if(window.currentURL !== "/") {
+            this.setState({addFavID: action.data});
+            this.setState({addFavID: -1});
+          }
+          break;
+        case "delete_favorite":
+          if(window.currentURL !== "/") {
+            this.setState({delFavID: action.data});
+            this.setState({delFavID: -1});
+          }
+          break;
+        case "back":
+          if(window.currentURL !== "/")
+            window.history.back();
+          break;
       }
     }
   }
@@ -122,10 +155,20 @@ export class App extends React.Component {
                       <Switch>
                         <Route exact path = "/" component={Menu} />
                         <Route exact path = "/404" component = {NotFound} />
-                        <Route exact path = "/museums" component = {Museums} />
+                        <Route exact path = "/museums" render={(props) => <Museums 
+                          openId={this.state.openedMusId}
+                          addFavID={this.state.addFavID}
+                          delFavID={this.state.delFavID}
+                          />}
+                        />
                         <Route exact path = "/museums/first" component = {Tretyakovka} />
                         <Route exact path = "/fav/first" component = {Tretyakovka} />
-                        <Route exact path = "/fav" component = {Favorites} />
+                        <Route exact path = "/fav" render={(props) => <Favorites 
+                          openId={this.state.openedMusId}
+                          addFavID={this.state.addFavID}
+                          delFavID={this.state.delFavID}
+                          />}
+                        />
                         <Redirect to = "/404"/>
                       </Switch>
                 </Router>

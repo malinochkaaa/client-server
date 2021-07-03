@@ -11,8 +11,9 @@ img{
     padding: 30px;
 }
 .card-style{
-    padding-left: 230px;
-    padding-right: 230px;
+    padding-bottom: 20px;
+    margin: 0 auto;
+    display: block;
 }
 a{
     text-align: left;

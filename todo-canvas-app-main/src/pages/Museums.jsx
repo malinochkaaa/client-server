@@ -1,32 +1,35 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./styles/Museums.css"
+import CardContainer from "./Card.jsx";
 import styled from 'styled-components';
-import { IconHeartStroke, IconHeart } from '@sberdevices/plasma-icons';
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
-    Card,
-    CardContent,
-    Cell, 
-    TextBoxSubTitle, 
-    TextBox, 
-    TextBoxTitle,
-    ActionButton,
     Container,
     Header,
-    Image,
  } from '@sberdevices/plasma-ui';
-import { showAllMuseums } from "../server/API_helper";
 
-const CardStyled = styled.div`
-    padding-left: 60px;
-`;
+import {showAllMuseums} from "../server/API_helper";
+
 const DivStyled = styled.div`
     padding: 60px;
+
  `;
 
-export const Museums = () => {
+function openMuseum(id, cards, history) {
+    let ind = id - 1;
+    if(ind < 0 || ind > cards.length || history.location.pathname === "/museums/first") return;
+    history.push({pathname: "/museums/first", num: cards[ind].id});
+}
+
+export const Museums = (props) => {
+    const load = () => {showAllMuseums().then(res => setCards(res.data))}
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [cards, setCards] = useState([]);
+    useEffect(() => setIsLoaded(true), [cards]);
+    useEffect(() => {if(!isLoaded) load()})
     const history = useHistory();
-    const [inFavorite, setFavorite] = useState(false);
+    openMuseum(props.openId, cards, history);
+    window.currentURL = history.location.pathname;
     return(
     <div>
         <div>
@@ -44,34 +47,8 @@ export const Museums = () => {
                 </Container>
             </DivStyled>
         </div>
-        <div className="card-style">
-            <CardStyled>
-                <Card style={{ width: "50rem" }}>
-                    <CardContent compact>
-                        <Cell
-                            contentLeft={
-                                <div className="img-style">
-                                    <Image className="img-m" src="https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_1_darvin_museum.jpg" />
-                                </div>
-                            }
-                            content={
-                                <TextBox>
-                                    <TextBoxTitle className="text-style"><Link to={ {pathname:"/museums/first", data: "alina"} }>Третьяковская галерея в Лаврушинском переулке</Link></TextBoxTitle>
-                                    <TextBoxSubTitle className="text-style">Лаврушинский переулок, 10</TextBoxSubTitle>
-                                    <ActionButton
-                                        onClick = {() => setFavorite(!inFavorite)}
-                                        size='l'
-                                        view='primary'
-                                        pin='square-square'
-                                        contentLeft={inFavorite ? <IconHeart/> : <IconHeartStroke/>}
-                                    >  
-                                    </ActionButton>
-                                </TextBox>
-                            }
-                        />
-                    </CardContent>
-                </Card>
-            </CardStyled>
+        <div>
+            {cards===[]?<div></div> : cards.map((e) => (<CardContainer key={e.id} info={e} />))}
         </div>
     </div>
     );

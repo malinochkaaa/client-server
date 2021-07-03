@@ -5,6 +5,7 @@ import { headline1, headline2 } from '@sberdevices/plasma-tokens';
 import { MarkedList, MarkedItem}  from '@sberdevices/plasma-ui'
 
 const Menu = () => {
+    window.currentURL = "/";
     return(
         <div className="menu-container">
             <h1 style={headline1}>Меню</h1>

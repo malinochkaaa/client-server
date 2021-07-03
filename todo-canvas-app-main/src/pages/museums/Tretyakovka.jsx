@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./Tretyakovka.css";
 import CarouselContainer from "./Carousel.jsx";
 import { useHistory } from "react-router-dom";
@@ -17,11 +17,32 @@ import {
 import { Button, ActionButton} from '@sberdevices/plasma-ui';
 import { IconHeartStroke, IconHeart, IconChevronLeft } from '@sberdevices/plasma-icons';
 import { headline1, headline3, paragraph1 } from '@sberdevices/plasma-tokens';
-
+import {showMuseum} from "../../server/API_helper.js";
+import {updateFavorites} from "../../server/favoritesManager"
 
 export const Tretyakovka = (props) => {
+    const load = () => {showMuseum(props.location.num).then(res => {setInfo(res.data); setFavorite(res.data.in_favourites)})}
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [info, setInfo] = useState({});
+    useEffect(() => setIsLoaded(true), info);
+    useEffect(() => {if(!isLoaded) load()})
     const history = useHistory();
+    console.log(info);
     const [inFavorite, setFavorite] = useState(false);
+    window.currentURL = history.location.pathname;
+
+    let worktime = info.worktime != undefined ? info.worktime : new Array(7).fill("loading...");
+    let stations = info.station == undefined ? <p>loading...</p> : info.station.map((e, i) => (
+        <div>
+            <p style={paragraph1}>{e}</p>
+            <p style={paragraph1}>{` (${info.distance[i]}.)`}</p>
+        </div>
+    ))
+
+    // if((props.addFavID === 0 && inFavorite === false) || (props.delFavID === 0 && inFavorite === true)) {
+    //     updateFavorites(inFavorite, info.id);
+    //     setFavorite(!inFavorite);
+    // }
     return(
         <div>
             <div className="name-container">
@@ -36,14 +57,14 @@ export const Tretyakovka = (props) => {
                     }}
                 >  
                 </ActionButton>
-                <h1 style={headline1}>{props.location.data}</h1>
-                <p style={paragraph1} className="block-style">Московский музей, посвящённый дарвинской теории эволюции. Инициатором создания стал биолог Александр Котс, начавший свою преподавательскую карьеру при Московских высших женских курсах в 1907-м. Этот же год считается и датой основания музея - учёный перенёс свою коллекцию редких чучел животных в здание курсов в Мерзляковском переулке. После революции 1917 года Дарвиновский музей стал самостоятельным учреждением. В 1994-м правительство Москвы выделило под нужды музея здание на улице Вавилова. По состоянию на 2018 год в состав экспозиции входят 400 000 предметов.</p>
+                <h1 style={headline1}>{info.name}</h1>
+                <p style={paragraph1} className="block-style">{info.description}</p>
                 <div className="div-style"> 
-                    <CarouselContainer />
+                    <CarouselContainer pictures={info.pictures}/>
                 </div>
                 <div className="align-right">
                     <Button
-                        onClick = {() => setFavorite(!inFavorite)}
+                        onClick = {() => {updateFavorites(inFavorite, info.id); setFavorite(!inFavorite);}}
                         text='Избранное'
                         size='l'
                         view='primary'
@@ -54,69 +75,65 @@ export const Tretyakovka = (props) => {
                 <div className="div-style">
                     <FaMapMarkedAlt className="small-icon"/>
                     <h3 style={headline3}> Адрес: </h3>
-                    <p style={paragraph1}>ул. Вавилова, 57</p>
+                    <p style={paragraph1}>{info.address}</p>
                 </div>
                 <div className="div-style">
                     <FaPhoneAlt className="small-icon"/>
                     <h3 style={headline3}> Телефон: </h3>
-                    <p style={paragraph1}>+7 (499) 132-10-47</p>
+                    <p style={paragraph1}>{info.phone}</p>
                 </div>
                 <div className="div-style">
                     <FaLink className="small-icon"/>
                     <h3 style={headline3}> Сайт: </h3>
-                    <a href="https://www.w3schools.com/cssref/css3_pr_align-content.asp" className="inline-style"><p style={paragraph1}>darwinmuseum.ru</p></a>
+                    <a href={info.website} className="inline-style"><p style={paragraph1}>{info.website}</p></a>
                 </div>
                 <div className="div-style">
                     <FaClock className="small-icon"/>
                     <h3 style={headline3}> Время работы:</h3>
                     <div>
                         <p style={paragraph1}>Понедельник: </p>
-                        <p style={paragraph1}>Выходной</p>
+                        <p style={paragraph1}>{worktime[0]}</p>
                     </div>
                     <div>
                         <p style={paragraph1}>Вторник: </p>
-                        <p style={paragraph1}>10:00 - 18:00</p>
+                        <p style={paragraph1}>{worktime[1]}</p>
                     </div>
                     <div>
                         <p style={paragraph1}>Среда: </p>
-                        <p style={paragraph1}>10:00 - 21:00</p>
+                        <p style={paragraph1}>{worktime[2]}</p>
                     </div>
                     <div>
                         <p style={paragraph1}>Четверг: </p>
-                        <p style={paragraph1}>10:00 - 18:00</p>
+                        <p style={paragraph1}>{worktime[3]}</p>
                     </div>
                     <div>
                         <p style={paragraph1}>Пятница: </p>
-                        <p style={paragraph1}>10:00 - 18:00</p>
+                        <p style={paragraph1}>{worktime[4]}</p>
                     </div>
                     <div>
                         <p style={paragraph1}>Суббота: </p>
-                        <p style={paragraph1}>10:00 - 18:00</p>
+                        <p style={paragraph1}>{worktime[5]}</p>
                     </div>
                     <div>
                         <p style={paragraph1}>Воскресенье: </p>
-                        <p style={paragraph1}>10:00 - 18:00</p>
+                        <p style={paragraph1}>{worktime[6]}</p>
                     </div>
                 </div>
                 <div className="div-style">
                     <FaSubway className="small-icon"/>
                     <h3 style={headline3}> Станция метро: </h3>
-                    <p style={paragraph1}>Академическая </p>
-                    <p style={paragraph1}>(900 м.)</p>
-                    <p style={paragraph1}>, </p>
-                    <p style={paragraph1}>Академическая </p>
-                    <p style={paragraph1}>(1000 м.)</p>
+                    {stations}
                 </div>
                 <div className="div-style">
                 <FaMoneyBillAlt className="small-icon"/>
                     <h3 style={headline3}> Стоимость билетов: </h3>
-                    <p style={paragraph1}>150 - 400 р.</p>
+                    <p style={paragraph1}>{info.payment}</p>
                 </div>
                 <div>
-                    <a href="https://www.w3schools.com/cssref/css3_pr_align-content.asp" className="inline-style"><FaInstagram className="icon-with-link"/></a>
-                    <FaFacebookF className="icon-with-link"/>
-                    <FaTwitter className="icon-no-link"/>
-                    <FaVk className="icon-no-link"/>
+                    <a target="_blank" href={info.inst} className="inline-style"><FaInstagram className={info.inst === "null" ? "icon-no-link" : "icon-with-link"}/></a>
+                    <a target="_blank" href={info.facebook} className="inline-style"><FaFacebookF className={info.facebook === "null" ? "icon-no-link" : "icon-with-link"}/></a>
+                    <a target="_blank" href={info.twitter} className="inline-style"><FaTwitter className={info.twitter === "null" ? "icon-no-link" : "icon-with-link"}/></a>
+                    <a target="_blank" href={info.vk} className="inline-style"><FaVk className={info.vk === "null" ? "icon-no-link" : "icon-with-link"}/></a>
                 </div>
                
             </div>

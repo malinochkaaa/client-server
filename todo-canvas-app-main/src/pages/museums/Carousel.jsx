@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, memo} from "react";
 import { 
     CarouselGridWrapper,
     Carousel, 
@@ -12,40 +12,17 @@ import {
     Row,
     Container,
 } from '@sberdevices/plasma-ui';
-
-const items = [
-    { 
-        title: 'Item 1', 
-        src: "https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_1_darvin_museum.jpg", 
-    }, 
-    { 
-        title: 'Item 2', 
-        src: "https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_2_darvin_museum.jpg",
-    }, 
-    { 
-        title: 'Item 3', 
-        src: "https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_3_darvin_museum.jpg", 
-    }, 
-    { 
-        title: 'Item 4', 
-        src: "https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_4_darvin_museum.jpg", 
-    }, 
-    { 
-        title: 'Item 5', 
-        src: "https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_5_darvin_museum.jpg", 
-    }
-];
-
-export const CarouselContainer = () => {
+const defaultImage = "https://online-fotoshop.ru/wp-content/uploads/bfi_thumb/dummy-transparent-p2gfbv7qayyokn2iuybz9hr1rkhapcogpd9eywlyeq.png";
+export const CarouselContainer = (props) => {
     const [index, setIndex] = useState(1);
-    //https://res.cloudinary.com/museums/image/upload/c_fill,h_768,q_100,w_1024/1_1_darvin_museum.jpg
+    const items = props.pictures == undefined ? [defaultImage, defaultImage] : props.pictures;
     let itemsComponents = items.map((item, i) => (
             <CarouselItem key={i}>
                 <Card style={{ width: "24.5rem", height: "19rem", margin: "0.4rem",}}>
                     <CardBody>
                         <CardContent>
                             <div className="img-t">
-                                <Image title={item.title} src={item.src} />
+                                <Image title={`Item ${i}`} src={item} />
                             </div>
                         </CardContent>
                     </CardBody>
