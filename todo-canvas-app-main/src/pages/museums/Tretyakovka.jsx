@@ -20,15 +20,23 @@ import { headline1, headline3, paragraph1 } from '@sberdevices/plasma-tokens';
 import {showMuseum} from "../../server/API_helper.js";
 import {updateFavorites} from "../../server/favoritesManager"
 
+function favUpdate(id, currentFavStatus, action, setFavorite) {
+    if((action === 'add' && !currentFavStatus) || (action === 'del' && currentFavStatus)) {
+        console.log("update fav");
+        updateFavorites(currentFavStatus, id);
+        setFavorite(!currentFavStatus);
+    }
+}
 export const Tretyakovka = (props) => {
-    const load = () => {showMuseum(props.location.num).then(res => {setInfo(res.data); setFavorite(res.data.in_favourites)})}
+    const load = () => {showMuseum(props.id).then(res => {setInfo(res.data); setFavorite(res.data.in_favourites)})}
     const [isLoaded, setIsLoaded] = useState(false);
     const [info, setInfo] = useState({});
-    useEffect(() => setIsLoaded(true), info);
-    useEffect(() => {if(!isLoaded) load()})
-    const history = useHistory();
-    console.log(info);
     const [inFavorite, setFavorite] = useState(false);
+    const history = useHistory();
+    useEffect(() => setIsLoaded(true), [info]);
+    useEffect(() => {if(!isLoaded) load()})
+    useEffect(() => {if(isLoaded) load();}, [props.id]);
+    useEffect(() => {if(isLoaded) {favUpdate(props.id, inFavorite, props.editFav.action, setFavorite);}}, [props.editFav]);
     window.currentURL = history.location.pathname;
 
     let worktime = info.worktime != undefined ? info.worktime : new Array(7).fill("loading...");
@@ -38,12 +46,10 @@ export const Tretyakovka = (props) => {
             <p style={paragraph1}>{` (${info.distance[i]}.)`}</p>
         </div>
     ))
-
-    // if((props.addFavID === 0 && inFavorite === false) || (props.delFavID === 0 && inFavorite === true)) {
-    //     updateFavorites(inFavorite, info.id);
-    //     setFavorite(!inFavorite);
-    // }
     return(
+        !isLoaded ?
+        <div>loading...</div>
+        :
         <div>
             <div className="name-container">
                 <ActionButton
@@ -53,6 +59,7 @@ export const Tretyakovka = (props) => {
                     pin='square-square'
                     contentLeft={<IconChevronLeft/>}
                     onClick={() => {
+                        console.log("back");
                         history.goBack();
                     }}
                 >  

@@ -6,29 +6,44 @@ import { useHistory } from "react-router-dom";
 import {
     Container,
     Header,
+    Spinner,
  } from '@sberdevices/plasma-ui';
 
 import {showAllMuseums} from "../server/API_helper";
+import { updateFavorites } from "../server/favoritesManager";
 
-const DivStyled = styled.div`
-    padding: 60px;
+const DivStyled = styled.div`padding: 60px;`;
 
- `;
-
-function openMuseum(id, cards, history) {
-    let ind = id - 1;
-    if(ind < 0 || ind > cards.length || history.location.pathname === "/museums/first") return;
-    history.push({pathname: "/museums/first", num: cards[ind].id});
+function favUpdate(cards, editProps) {
+    const ind = editProps.id-1;
+    if(cards.length !== 0 && ind >= 0) {
+        const id = cards[ind].id;
+        const inFav = cards[ind].in_favourites;
+        console.log('inFave = ', inFav);
+        const action = editProps.action;
+        if((inFav && action === 'del') || (!inFav && action === 'add')) {
+            updateFavorites(inFav, id);
+        }
+    }
 }
 
 export const Museums = (props) => {
-    const load = () => {showAllMuseums().then(res => setCards(res.data))}
+    const openMuseum = (id) => {props.openMuseumById(id)}
+    const load = () => {if(window.user_id !== "") showAllMuseums().then(res => {setCards(res.data); props.fillArrayInd_Id(res.data, 'all'); console.log("loaded")})}
     const [isLoaded, setIsLoaded] = useState(false);
     const [cards, setCards] = useState([]);
     useEffect(() => setIsLoaded(true), [cards]);
-    useEffect(() => {if(!isLoaded) load()})
+    useEffect(() => {if(!isLoaded) load()});
+    useEffect(() => {
+        if(props.openId !== -1 && isLoaded) {
+            history.push({pathname: `${props.prefix}/museums/first`});
+        }
+    }, [props.openId]);
     const history = useHistory();
-    openMuseum(props.openId, cards, history);
+    useEffect(() => {
+        favUpdate(cards, props.editFav);
+        setTimeout(load(), 1000);
+    }, [props.editFav]);
     window.currentURL = history.location.pathname;
     return(
     <div>
@@ -40,6 +55,7 @@ export const Museums = (props) => {
                         title="Музеи"
                         subtitle="Список музеев Москвы"
                         onClick={() => {
+                            setIsLoaded(false);
                             history.goBack();
                         }}
                     >
@@ -47,9 +63,19 @@ export const Museums = (props) => {
                 </Container>
             </DivStyled>
         </div>
+        {
+        cards.length === 0 ?
+        <Spinner size={100} style={{margin: "auto"}}/>
+        :
         <div>
-            {cards===[]?<div></div> : cards.map((e) => (<CardContainer key={e.id} info={e} />))}
+            {cards===[]?<div></div> : cards.map((e, ind) => (<CardContainer 
+            key={e.id} 
+            ind={ind+1} 
+            info={e} 
+            openMuseum={openMuseum}
+            prefix={props.prefix}/>))}
         </div>
+        }
     </div>
     );
 };

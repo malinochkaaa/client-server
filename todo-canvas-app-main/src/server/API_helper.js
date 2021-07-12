@@ -12,6 +12,7 @@ export async function deleteFromFavorites(museum_id) {
 }
  
 export async function showAllMuseums() {
+    console.log(window.user_id);
     return await axios.post(`${URL}museums`, {"user_id": window.user_id});
 }
  
