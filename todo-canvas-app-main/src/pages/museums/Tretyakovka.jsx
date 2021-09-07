@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./Tretyakovka.css";
 import CarouselContainer from "./Carousel.jsx";
+import CarouselPortalContainer from "./CarouselPortal";
 import { useHistory } from "react-router-dom";
 import { 
     FaInstagram,
@@ -50,7 +51,7 @@ export const Tretyakovka = (props) => {
         !isLoaded ?
         <div>loading...</div>
         :
-        <div>
+        <div className="scroll">
             <div className="name-container">
                 <ActionButton
                     back={true}
@@ -67,7 +68,13 @@ export const Tretyakovka = (props) => {
                 <h1 style={headline1}>{info.name}</h1>
                 <p style={paragraph1} className="block-style">{info.description}</p>
                 <div className="div-style"> 
-                    <CarouselContainer pictures={info.pictures}/>
+                {
+                    document.documentElement.clientWidth == 1280 &&
+                    document.documentElement.clientHeight == 800 ?
+                         <CarouselPortalContainer pictures={info.pictures}/>
+                    :
+                        <CarouselContainer pictures={info.pictures}/>
+                }
                 </div>
                 <div className="align-right">
                     <Button

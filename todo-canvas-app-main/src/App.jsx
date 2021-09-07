@@ -173,7 +173,6 @@ export class App extends React.Component {
                           return; 
                   }
               })()}
-              <div>
                 <Router>
                       <Switch>
                         <Route exact path = {`${prefix}/`} render={(props) => <Menu
@@ -206,7 +205,6 @@ export class App extends React.Component {
                         <Redirect to = {`${prefix}/404`}/>
                       </Switch>
                 </Router>
-              </div>
       </DeviceThemeProvider>
     );
   }
