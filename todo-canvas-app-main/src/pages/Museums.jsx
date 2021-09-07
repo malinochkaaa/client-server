@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./styles/Museums.css"
 import CardContainer from "./Card.jsx";
+import CardVertContainer from "./CardVert";
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import {
@@ -12,7 +13,7 @@ import {
 import {showAllMuseums} from "../server/API_helper";
 import { updateFavorites } from "../server/favoritesManager";
 
-const DivStyled = styled.div`padding: 60px;`;
+const DivStyled = styled.div`padding: 30px;`;
 
 function favUpdate(cards, editProps) {
     const ind = editProps.id-1;
@@ -45,6 +46,7 @@ export const Museums = (props) => {
         setTimeout(load(), 1000);
     }, [props.editFav]);
     window.currentURL = history.location.pathname;
+    console.log(document.documentElement.clientWidth);
     return(
     <div>
         <div>
@@ -63,19 +65,35 @@ export const Museums = (props) => {
                 </Container>
             </DivStyled>
         </div>
+        <div className={(document.documentElement.clientWidth <= 400) ? "phone-scroll" : "laptop-scroll"}>
         {
         cards.length === 0 ?
         <Spinner size={100} style={{margin: "auto"}}/>
         :
         <div>
-            {cards===[]?<div></div> : cards.map((e, ind) => (<CardContainer 
-            key={e.id} 
-            ind={ind+1} 
-            info={e} 
-            openMuseum={openMuseum}
-            prefix={props.prefix}/>))}
+            {cards===[]?<div></div> : cards.map((e, ind) => {
+                if(document.documentElement.clientWidth <= 400) {
+                    console.log("vert");
+                    return <CardVertContainer
+                                key={e.id} 
+                                ind={ind+1} 
+                                info={e} 
+                                openMuseum={openMuseum}
+                                prefix={props.prefix}
+                            />;
+                }
+                else 
+                    return <CardContainer 
+                                key={e.id} 
+                                ind={ind+1} 
+                                info={e} 
+                                openMuseum={openMuseum}
+                                prefix={props.prefix}
+                            />
+            })}
         </div>
         }
+        </div>
     </div>
     );
 };

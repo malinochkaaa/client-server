@@ -15,14 +15,11 @@ import {
  } from '@sberdevices/plasma-ui';
  import {updateFavorites} from "../server/favoritesManager"
 import { useEffect } from "react";
-const CardStyled = styled.div`padding-left: 60px;`;
-const NumStyled = styled
 const CardContainer = (props) => {
     const [inFavorite, setFavorite] = useState(props.info.in_favourites); //TODO получать в избранном или нет из пропсов 
     useEffect(() => setFavorite(props.info.in_favourites), [props.info.in_favourites]);
     return(
         <div className="card-style">
-            <CardStyled>
                 <Card style={{ width: "50rem" }}>
                     <CardContent compact>
                     <TextBox style={{ fontSize: "16px", position: "absolute", top: "10px"}} title={props.ind}/>
@@ -51,7 +48,7 @@ const CardContainer = (props) => {
                         />
                     </CardContent>
                 </Card>
-            </CardStyled>
+        
         </div>
     );
 };
