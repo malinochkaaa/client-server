@@ -12,17 +12,16 @@ import {
     Row,
     Container,
 } from '@sberdevices/plasma-ui';
-import "./Tretyakovka.css";
 const defaultImage = "https://online-fotoshop.ru/wp-content/uploads/bfi_thumb/dummy-transparent-p2gfbv7qayyokn2iuybz9hr1rkhapcogpd9eywlyeq.png";
 export const CarouselPortalContainer = (props) => {
     const [index, setIndex] = useState(1);
     const items = props.pictures == undefined ? [defaultImage, defaultImage] : props.pictures;
     let itemsComponents = items.map((item, i) => (
             <CarouselItem key={i}>
-                <Card style={{width: "auto"}}>
+                <Card style={{ width: "12.5rem", height: "10rem", margin: "0.4rem",}}>
                     <CardBody>
                         <CardContent>
-                            <div>
+                            <div className="img-t">
                                 <Image title={`Item ${i}`} src={item} />
                             </div>
                         </CardContent>

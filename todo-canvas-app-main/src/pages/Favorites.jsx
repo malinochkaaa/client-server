@@ -4,10 +4,11 @@ import "./styles/Museums.css"
 import { Container, Header, Image }  from '@sberdevices/plasma-ui';
 import { useHistory } from "react-router-dom";
 import CardContainer from "./Card.jsx";
+import CardVertContainer from "./CardVert";
 import {showFavorites} from "../server/API_helper"
 import { updateFavorites } from "../server/favoritesManager";
 
-const DivStyled = styled.div`padding: 60px;`;
+const DivStyled = styled.div`padding: 30px;`;
 
 function favUpdate(cards, editProps) {
     const ind = editProps.id-1;
@@ -48,7 +49,7 @@ export const Favorites = (props) => {
     window.currentURL = history.location.pathname;
     
     return(
-    <div>
+    <div className="list-scroll">
         <div>
         <DivStyled>
             <Container>
@@ -68,12 +69,26 @@ export const Favorites = (props) => {
             <h1>Нет избранных музеев</h1>
         :
         <div className="card-style">
-            {cards===[]?<div></div> : cards.map((e, ind) => (<CardContainer 
-            key={e.id} 
-            ind={ind+1} 
-            info={e} 
-            openMuseum={openMuseum}
-            prefix={props.prefix}/>))}
+            {cards===[]?<div></div> : cards.map((e, ind) => {
+                if(document.documentElement.clientWidth <= 400) {
+                console.log("vert");
+                return <CardVertContainer
+                            key={e.id} 
+                            ind={ind+1} 
+                            info={e} 
+                            openMuseum={openMuseum}
+                            prefix={props.prefix}
+                        />;
+            }
+            else 
+                return <CardContainer 
+                            key={e.id} 
+                            ind={ind+1} 
+                            info={e} 
+                            openMuseum={openMuseum}
+                            prefix={props.prefix}
+                        />
+            })}
         </div>
         }
     </div>

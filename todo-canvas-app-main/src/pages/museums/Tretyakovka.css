@@ -38,6 +38,12 @@ p, h3{
     width: auto; 
     max-width: 360px;
 }
+.phone-img-t{
+    border-radius: 8px;
+    height: auto; 
+    width: auto; 
+    max-width: 250px;
+}
 .align-right{
     float: right;
 }

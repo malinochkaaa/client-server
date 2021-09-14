@@ -20,7 +20,7 @@ const CardContainer = (props) => {
     useEffect(() => setFavorite(props.info.in_favourites), [props.info.in_favourites]);
     return(
         <div className="card-style">
-                <Card style={{ width: "50rem" }}>
+                <Card style={{ width: "30rem" }}>
                     <CardContent compact>
                     <TextBox style={{ fontSize: "16px", position: "absolute", top: "10px"}} title={props.ind}/>
                         <Cell
@@ -37,7 +37,7 @@ const CardContainer = (props) => {
                                     <TextBoxSubTitle className="text-style">{props.info.address}</TextBoxSubTitle>
                                     <ActionButton
                                         onClick = {() => {updateFavorites(inFavorite, props.info.id); setFavorite(!inFavorite);}}
-                                        size='l'
+                                        size='m'
                                         view='primary'
                                         pin='square-square'
                                         contentLeft={inFavorite ? <IconHeart/> : <IconHeartStroke/>}
