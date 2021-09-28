@@ -20,7 +20,7 @@ const CardContainer = (props) => {
     useEffect(() => setFavorite(props.info.in_favourites), [props.info.in_favourites]);
     return(
         <div className="card-style">
-                <Card style={{ width: "30rem" }}>
+                <Card style={{ width: "30rem", backgroundColor: "rgba(0, 44, 66, 0.7)", }}>
                     <CardContent compact>
                     <TextBox style={{ fontSize: "16px", position: "absolute", top: "10px"}} title={props.ind}/>
                         <Cell
@@ -32,7 +32,7 @@ const CardContainer = (props) => {
                             content={
                                 <TextBox>
                                     <TextBoxTitle className="text-style">
-                                        <Link to={{pathname: `${props.prefix}/museums/first`}} onClick={() => props.openMuseum(props.info.id)}>{props.info.name}</Link>
+                                        <Link to={{pathname: `${props.prefix}/museums/${props.info.id}`}}>{props.info.name}</Link>
                                     </TextBoxTitle>
                                     <TextBoxSubTitle className="text-style">{props.info.address}</TextBoxSubTitle>
                                     <ActionButton

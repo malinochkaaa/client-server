@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./Tretyakovka.css";
 import CarouselContainer from "./Carousel.jsx";
-import CarouselPortalContainer from "./CarouselPortal";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { 
     FaInstagram,
     FaFacebookF,
@@ -29,15 +28,16 @@ function favUpdate(id, currentFavStatus, action, setFavorite) {
     }
 }
 export const Tretyakovka = (props) => {
-    const load = () => {showMuseum(props.id).then(res => {setInfo(res.data); setFavorite(res.data.in_favourites)})}
+    const {id} = useParams();
+    const load = () => {showMuseum(id).then(res => {setInfo(res.data); setFavorite(res.data.in_favourites)})}
     const [isLoaded, setIsLoaded] = useState(false);
     const [info, setInfo] = useState({});
     const [inFavorite, setFavorite] = useState(false);
     const history = useHistory();
     useEffect(() => setIsLoaded(true), [info]);
     useEffect(() => {if(!isLoaded) load()})
-    useEffect(() => {if(isLoaded) load();}, [props.id]);
-    useEffect(() => {if(isLoaded) {favUpdate(props.id, inFavorite, props.editFav.action, setFavorite);}}, [props.editFav]);
+    useEffect(() => {if(isLoaded) load();}, [id]);
+    useEffect(() => {if(isLoaded) {favUpdate(id, inFavorite, props.editFav.action, setFavorite);}}, [props.editFav]);
     window.currentURL = history.location.pathname;
 
     let worktime = info.worktime != undefined ? info.worktime : new Array(7).fill("loading...");
@@ -68,13 +68,7 @@ export const Tretyakovka = (props) => {
                 <h1 style={headline1}>{info.name}</h1>
                 <p style={paragraph1} className="block-style">{info.description}</p>
                 <div className="div-style"> 
-                {
-                    document.documentElement.clientWidth == 1280 &&
-                    document.documentElement.clientHeight == 800 ?
-                         <CarouselPortalContainer pictures={info.pictures}/>
-                    :
-                        <CarouselContainer pictures={info.pictures}/>
-                }
+                    <CarouselContainer pictures={info.pictures}/>
                 </div>
                 <div className="align-right">
                     <Button
@@ -99,7 +93,7 @@ export const Tretyakovka = (props) => {
                 <div className="div-style">
                     <FaLink className="small-icon"/>
                     <h3 style={headline3}> Сайт: </h3>
-                    <a href={info.website} className="inline-style"><p style={paragraph1}>{info.website}</p></a>
+                    <a href={info.website} target='_self' className="inline-style"><p style={paragraph1}>{info.website}</p></a>
                 </div>
                 <div className="div-style">
                     <FaClock className="small-icon"/>
@@ -144,10 +138,10 @@ export const Tretyakovka = (props) => {
                     <p style={paragraph1}>{info.payment}</p>
                 </div>
                 <div>
-                    <a target="_blank" href={info.inst} className="inline-style"><FaInstagram className={info.inst === "null" ? "icon-no-link" : "icon-with-link"}/></a>
-                    <a target="_blank" href={info.facebook} className="inline-style"><FaFacebookF className={info.facebook === "null" ? "icon-no-link" : "icon-with-link"}/></a>
-                    <a target="_blank" href={info.twitter} className="inline-style"><FaTwitter className={info.twitter === "null" ? "icon-no-link" : "icon-with-link"}/></a>
-                    <a target="_blank" href={info.vk} className="inline-style"><FaVk className={info.vk === "null" ? "icon-no-link" : "icon-with-link"}/></a>
+                    <a target="_self" href={info.inst} className="inline-style"><FaInstagram className={info.inst === "null" ? "icon-no-link" : "icon-with-link"}/></a>
+                    <a target="_self" href={info.facebook} className="inline-style"><FaFacebookF className={info.facebook === "null" ? "icon-no-link" : "icon-with-link"}/></a>
+                    <a target="_self" href={info.twitter} className="inline-style"><FaTwitter className={info.twitter === "null" ? "icon-no-link" : "icon-with-link"}/></a>
+                    <a target="_self" href={info.vk} className="inline-style"><FaVk className={info.vk === "null" ? "icon-no-link" : "icon-with-link"}/></a>
                 </div>
                
             </div>

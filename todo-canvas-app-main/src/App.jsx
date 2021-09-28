@@ -6,7 +6,7 @@ import {
 import "./App.css";
 import { createGlobalStyle } from 'styled-components';
 import { darkJoy, darkEva, darkSber } from '@sberdevices/plasma-tokens/themes'; 
-import {text, background, gradient} from '@sberdevices/plasma-tokens';
+import {text, background} from '@sberdevices/plasma-tokens';
 import { DeviceThemeProvider } from '@sberdevices/plasma-ui/components/Device';
 import {
   BrowserRouter as Router, 
@@ -41,8 +41,9 @@ const DocStyle = createGlobalStyle`
     html:root {
         min-height: 100vh;
         color: ${text};
-        background-color: ${background};
-        background-image: ${gradient};
+        background-position: center center;
+        background-attachment: fixed;
+        background-image: url("https://res.cloudinary.com/museums/image/upload/e_blur:400/v1632137644/back2.jpg");
     }
 `;
 
@@ -190,7 +191,7 @@ export class App extends React.Component {
                           prefix={prefix}
                           />}
                         />
-                        <Route exact path = {`${prefix}/museums/first`} render = {(props) => <Tretyakovka
+                        <Route exact path = {`${prefix}/museums/:id`} render = {(props) => <Tretyakovka
                           id={this.state.openMusId}
                           editFav={this.state.editFav}
                           />}

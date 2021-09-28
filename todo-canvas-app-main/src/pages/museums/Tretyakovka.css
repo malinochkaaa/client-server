@@ -18,7 +18,7 @@
     width: 3rem;
     height: 3rem;
     display:inline;
-    opacity: 0.2;
+    opacity: 0.4;
 }
 .inline-style{
     display:inline;   
@@ -32,13 +32,19 @@
 p, h3{
     display:inline;
 }
-.img-t{
+.portal-img-t{
     border-radius: 8px;
     height: auto; 
     width: auto; 
     max-width: 360px;
 }
 .phone-img-t{
+    border-radius: 8px;
+    height: auto; 
+    width: auto; 
+    max-width: 250px;
+}
+.box-img-t{
     border-radius: 8px;
     height: auto; 
     width: auto; 
