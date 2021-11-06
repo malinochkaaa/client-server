@@ -60,7 +60,7 @@ export const Tretyakovka = (props) => {
             <div className="name-container">
                 <ActionButton
                     back={true}
-                    size='m'
+                    size='l'
                     view='clear'
                     pin='square-square'
                     contentLeft={<IconChevronLeft/>}

@@ -19,10 +19,17 @@ export const CarouselPortalContainer = (props) => {
     const items = props.pictures == undefined ? [defaultImage, defaultImage] : props.pictures;
     let itemsComponents = items.map((item, i) => (
             <CarouselItem key={i}>
+<<<<<<< HEAD
                 <Card style={{ width: "12rem", height: "10rem", margin: "0.4rem",}}>
                     <CardBody>
                         <CardContent>
                             <div className="portal-img-t">
+=======
+                <Card style={{width: "auto"}}>
+                    <CardBody>
+                        <CardContent>
+                            <div>
+>>>>>>> parent of 50f8145 (update)
                                 <Image title={`Item ${i}`} src={item} />
                             </div>
                         </CardContent>

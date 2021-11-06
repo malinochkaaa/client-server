@@ -80,7 +80,6 @@ export class App extends React.Component {
       this.dispatchAssistantAction(action);
     });
   }
-  
 
   componentDidMount() {
     console.log('componentDidMount');
@@ -178,7 +177,6 @@ export class App extends React.Component {
                 <Router>
                       <Switch>
                         <Route exact path = {`${prefix}/`} render={(props) => <Menu
-                        assistant={this.assistant}
                           nextPage={this.state.page}
                           prefix={prefix}/>} 
                         />

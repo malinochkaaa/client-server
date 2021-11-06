@@ -38,6 +38,7 @@ p, h3{
     width: auto; 
     max-width: 360px;
 }
+<<<<<<< HEAD
 .phone-img-t{
     border-radius: 8px;
     height: auto; 
@@ -50,6 +51,8 @@ p, h3{
     width: auto; 
     max-width: 250px;
 }
+=======
+>>>>>>> parent of 50f8145 (update)
 .align-right{
     float: right;
 }

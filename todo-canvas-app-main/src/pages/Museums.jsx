@@ -47,9 +47,8 @@ export const Museums = (props) => {
     }, [props.editFav]);
     window.currentURL = history.location.pathname;
     console.log(document.documentElement.clientWidth);
-
     return(
-    <div className="list-scroll">
+    <div>
         <div>
            <DivStyled>
                 <Container>
@@ -66,7 +65,7 @@ export const Museums = (props) => {
                 </Container>
             </DivStyled>
         </div>
-        <div>
+        <div className={(document.documentElement.clientWidth <= 400) ? "phone-scroll" : "laptop-scroll"}>
         {
         cards.length === 0 ?
         <Spinner size={100} style={{margin: "auto"}}/>
@@ -74,6 +73,7 @@ export const Museums = (props) => {
         <div>
             {cards===[]?<div></div> : cards.map((e, ind) => {
                 if(document.documentElement.clientWidth <= 400) {
+                    console.log("vert");
                     return <CardVertContainer
                                 key={e.id} 
                                 ind={ind+1} 
