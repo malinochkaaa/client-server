@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import "./Tretyakovka.css";
 import CarouselContainer from "./Carousel.jsx";
+import CarouselPortalContainer from "./CarouselPortal";
+import CarouselBoxContainer from "./CarouselBox";
 import { useHistory, useParams } from "react-router-dom";
 import { 
     FaInstagram,
@@ -29,14 +31,17 @@ function favUpdate(id, currentFavStatus, action, setFavorite) {
 }
 export const Tretyakovka = (props) => {
     const {id} = useParams();
-    const load = () => {showMuseum(id).then(res => {setInfo(res.data); setFavorite(res.data.in_favourites)})}
     const [isLoaded, setIsLoaded] = useState(false);
     const [info, setInfo] = useState({});
     const [inFavorite, setFavorite] = useState(false);
     const history = useHistory();
-    useEffect(() => setIsLoaded(true), [info]);
-    useEffect(() => {if(!isLoaded) load()})
-    useEffect(() => {if(isLoaded) load();}, [id]);
+
+    useEffect(() => {
+        showMuseum(id)
+        .then(res => {setInfo(res.data); setFavorite(res.data.in_favourites)})
+        .then(() => setIsLoaded(true));
+    }
+    , []);
     useEffect(() => {if(isLoaded) {favUpdate(id, inFavorite, props.editFav.action, setFavorite);}}, [props.editFav]);
     window.currentURL = history.location.pathname;
 
@@ -68,7 +73,13 @@ export const Tretyakovka = (props) => {
                 <h1 style={headline1}>{info.name}</h1>
                 <p style={paragraph1} className="block-style">{info.description}</p>
                 <div className="div-style"> 
-                    <CarouselContainer pictures={info.pictures}/>
+                {
+                    document.documentElement.clientWidth == 1280 &&
+                    document.documentElement.clientHeight == 800 ?
+                         <CarouselPortalContainer pictures={info.pictures}/>
+                    :
+                        <CarouselContainer pictures={info.pictures}/>
+                }
                 </div>
                 <div className="align-right">
                     <Button
